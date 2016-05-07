@@ -19,29 +19,20 @@ property = {
 
 
 # Write a function that accepts the above object as an argument, and returns an array of all
- # available contiguous date ranges, listing only the start and end dates of each range (of the format [[start_date, end_date], [start_date, end_date]]).
+# available contiguous date ranges, listing only the start and end dates of each range (of the format [[start_date, end_date], [start_date, end_date]]).
 
 def available_ranges(property)
     
     # Turn availability into array of characters
     availability = property[:availability].chars.to_a
-    # # DEBUG start with smaller array
-    availability = availability[0..49]
-    puts "availability: "
-    # print availability
-    puts "***"
     
     # Turn minstay into array by splitting on ','
     minstay =  property[:minstay].split(",")
-    puts "minstay: "
-    # print minstay
-    puts "***"
-    
-    
-    # Turn price into array by splitting on ','
-    # price = property[:price].split(",")
-    # puts "price: "
-    # print price
+
+    # DEBUG start with smaller array
+    n = 75
+    availability = availability[0..n]
+    minstay = minstay[0..n]
 
     # Counting variables to keep track of possible date ranges
     start_date_obj = Date.parse(property[:start_date])
@@ -56,22 +47,15 @@ def available_ranges(property)
         # If avaiablity is Y, possible start_index = i
         if availability[i] === "Y"
             start_index = i
-            # puts "start index:"
-            # puts start_index
+
             # get the min stay length for starting on that day
             min_days = minstay[i].to_i
-            # puts "min_days: "
-            # puts min_days
+
             # Iterate through availability starting after start index
             for j in(i..availability.length)
                 # If not available, break out of loop
                 break if availability[j] === "N"
-                    # Reset start index
-                    # start_index = 0
-                    # Reset min days
-                    # min_days = 0
-                    # Break out of loop
-                    # break
+
                 # If available and if this is at least min_days from start index, including the first day, add it to output
                 if j+1-i >= min_days
                     # We have a winner! Format into date strings to add to output array
@@ -92,9 +76,9 @@ def available_ranges(property)
 
     end
 
-    puts "available dates: "
+    puts "available dates: \n #{available_dates}"
     # print available_dates
-    print available_dates.length
+    # print available_dates
 
     return available_dates
 
@@ -150,8 +134,8 @@ end
 
 
 
+# Test
+available_ranges(property)
 
-# available_ranges(property)
 cost_of_booking(property, '2015-01-18', '2015-01-21')
-
 cost_of_booking(property, '2015-01-21', '2015-01-23')
